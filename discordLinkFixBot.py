@@ -2,7 +2,7 @@ import discord
 import re
 import os
 
-const port = process.env.PORT || 4000;
+port = os.getenv('PORT', 4000)
 
 intents = discord.Intents.default()
 intents.message_content = True
