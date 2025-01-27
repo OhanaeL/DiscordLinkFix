@@ -1,9 +1,11 @@
 import discord
 import re
 import os
+from dotenv import load_dotenv
 from flask import Flask
 import threading
 
+load_dotenv()
 # Environment variables and setup
 port = int(os.getenv('PORT', 4000))
 
@@ -38,10 +40,12 @@ async def on_message(message):
     
     if matches:
         urls = [f'{match[0]}/status/{match[1].rstrip("/")}' for match in matches]
+        print(urls)
         embeds_without_description = []
         if message.embeds:
             for embed in message.embeds:
-                if re.sub(r'/photo/\d+', '', embed.url[len(base_url):]).rstrip('/') in urls:
+                print(embed.url)
+                if re.sub(r'/photo/\d+', '', embed.url[len(base_url):]).rstrip('/').split('?')[0] in urls:
                     print(embed.description)
                     if not embed.description:
                         embeds_without_description.append(embed.url)
