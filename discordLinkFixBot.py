@@ -22,6 +22,7 @@ twitter_url_pattern = r'https?://x\.com/([^/]+)/status/(\d+)'
 
 @app.route('/')
 def index():
+    print("Heartbeat Pinged!")
     return "Discord Bot is running!"
 
 @client.event
