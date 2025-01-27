@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 import threading
+import asyncio
 
 load_dotenv()
 # Environment variables and setup
@@ -36,6 +37,8 @@ async def on_message(message):
     if message.author == client.user:
         return
     
+    await asyncio.sleep(2)
+    
     matches = re.findall(twitter_url_pattern, message.content)
     
     if matches:
@@ -62,9 +65,7 @@ def run_flask():
     app.run(host='0.0.0.0', port=port)
 
 if __name__ == '__main__':
-    # Running Flask in a separate thread so that it doesn't block the bot
     flask_thread = threading.Thread(target=run_flask)
     flask_thread.start()
 
-    # Run the discord bot
     run_discord_bot()
