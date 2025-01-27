@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask
 import threading
+import asyncio
 
 load_dotenv()
 
@@ -55,6 +56,8 @@ async def on_message(message):
     matches = re.findall(twitter_url_pattern, message.content)
 
     if matches:
+        
+        await asyncio.sleep(2)
         urls = [f'{match[0]}/status/{match[1].rstrip("/")}' for match in matches]
         embeds_without_description = []
         if message.embeds:
